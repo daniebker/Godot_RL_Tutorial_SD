@@ -9,6 +9,14 @@ public class GridTest
     {
         Assert.Equal(
             Vector2I.Zero,
-            Grid.WorldToGrid(new Vector2I(0, 0)));
+            Grid.WorldToGrid(Vector2I.Zero));
+    }
+
+    [Fact]
+    public void ShouldConvertGridCoordinatesToWorld()
+    {
+        Assert.Equal(
+            Vector2I.Zero,
+            Grid.GridToWorld(Vector2I.Zero));
     }
 }
