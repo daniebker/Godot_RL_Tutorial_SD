@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TileDefinition" load_steps=4 format=3 uid="uid://bjhmr76b5wgav"]
+
+[ext_resource type="Texture2D" uid="uid://bd3yxjuamg78o" path="res://assets/images/kenney_micro_pack/colored_tilemap_packed.png" id="1_wymk4"]
+[ext_resource type="Script" path="res://RLTutorials/Map/TileDefinition.cs" id="2_10qa6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kpve"]
+atlas = ExtResource("1_wymk4")
+region = Rect2(8, 0, 8, 8)
+
+[resource]
+script = ExtResource("2_10qa6")
+Texture = SubResource("AtlasTexture_3kpve")
+ColorLit = Color(1, 1, 1, 1)
+ColorDark = Color(0.498039, 0.498039, 0.498039, 1)
+IsWalkable = false
+IsTransparent = false

@@ -1,33 +1,46 @@
 using Godot;
-using System;
-using SupaRL.src.utls;
+using SupaRL.Utls;
+using SupaRL.Entities;
+using SupaRL.Map;
 
 public partial class Game : Node2D
 {
-	Vector2I playerGridPosition = Vector2I.Zero;
-	Sprite2D player;
-	EventHandler eventHandler;
+    Vector2I _playerGridPosition = Vector2I.Zero;
+    Entity _player;
+    EventHandler _eventHandler;
+    readonly EntityDefinition playerDefinition = ResourceLoader
+            .Load<EntityDefinition>("res://assets/definitions/entities/actors/entity_definition_player.tres");
+    Node2D _entities;
+    Map _map;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		player = GetNode<Sprite2D>("Player");
-		eventHandler = GetNode<EventHandler>("EventHandler");
-	}
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        _eventHandler = GetNode<EventHandler>("EventHandler");
+        _entities = GetNode<Node2D>("Entities");
+        _map = GetNode<Map>("Map");
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		var action = eventHandler.GetAction();
 
-		if (action is MovementAction movementAction)
-		{
-			playerGridPosition += movementAction.Offset;
-			player.Position = Grid.GridToWorld(playerGridPosition);
-		}
-		else if (action is EscapeAction)
-		{
-			GetTree().Quit();
-		}
-	}
+        var size = GetViewportRect().Size.Floor() / 2;
+        var player_start_pos = Grid.WorldToGrid((Vector2I)size);
+        _player = new Entity(player_start_pos, playerDefinition);
+        _entities.AddChild(_player);
+
+        var npc = new Entity(player_start_pos + Vector2I.Right, playerDefinition);
+        npc.Modulate = Colors.OrangeRed;
+        _entities.AddChild(npc);
+
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        var action = _eventHandler.GetAction();
+        action?.Perform(this, _player);
+    }
+
+    public MapData GetMapData()
+    {
+        return _map.MapData;
+    }
+
 }

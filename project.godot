@@ -10,14 +10,20 @@ config_version=5
 
 [application]
 
-config/name="RLTutorisl"
+config/name="RLTutorials"
 run/main_scene="res://RLTutorials/Game/Game.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
 
 [dotnet]
 
-project/assembly_name="RLTutorisl"
+project/assembly_name="RLTutorials"
+project/solution_directory="./"
 
 [rendering]
 

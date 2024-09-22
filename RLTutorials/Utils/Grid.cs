@@ -1,6 +1,6 @@
 using Godot;
 
-namespace SupaRL.src.utls
+namespace SupaRL.Utls
 {
     public partial class Grid
     {
