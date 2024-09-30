@@ -20,16 +20,13 @@ public partial class Game : Node2D
         _entities = GetNode<Node2D>("Entities");
         _map = GetNode<Map>("Map");
 
+		var camera = GetNode<Camera2D>("Camera2D");
 
-        var size = GetViewportRect().Size.Floor() / 2;
-        var player_start_pos = Grid.WorldToGrid((Vector2I)size);
-        _player = new Entity(player_start_pos, playerDefinition);
+        _player = new Entity(Vector2I.Zero, playerDefinition);
+        RemoveChild(camera);
+        _player.AddChild(camera);
         _entities.AddChild(_player);
-
-        var npc = new Entity(player_start_pos + Vector2I.Right, playerDefinition);
-        npc.Modulate = Colors.OrangeRed;
-        _entities.AddChild(npc);
-
+        _map.Generate(_player);
     }
 
     public override void _PhysicsProcess(double delta)

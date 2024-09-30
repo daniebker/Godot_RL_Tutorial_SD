@@ -5,9 +5,9 @@ namespace SupaRL.Map
 {
     public partial class MapData : RefCounted
     {
-        private const string FLOOR = "floor";
-        private const string WALL = "wall";
-        private readonly Dictionary<string, TileDefinition> tileTypes = new Dictionary<string, TileDefinition> {
+        public const string FLOOR = "floor";
+        public const string WALL = "wall";
+        public static readonly Dictionary<string, TileDefinition> tileTypes = new Dictionary<string, TileDefinition> {
             { FLOOR, ResourceLoader.Load<TileDefinition>("res://assets/definitions/tiles/tile_definition_floor.tres") },
             { WALL, ResourceLoader.Load<TileDefinition>("res://assets/definitions/tiles/tile_definition_wall.tres") },
         };
@@ -31,14 +31,9 @@ namespace SupaRL.Map
                 for (int x = 0; x < Width; x++)
                 {
                     var tilePosition = new Vector2I(x, y);
-                    var tile = new Tile(tilePosition, tileTypes[FLOOR]);
+                    var tile = new Tile(tilePosition, tileTypes[WALL]);
                     Tiles.Add(tile);
                 }
-            }
-            for (int x = 30; x <= 34; x++)
-            {
-                Tile tile = GetTile(new Vector2I(x, 22));
-                tile.SetTileType(tileTypes[WALL]);
             }
         }
 
