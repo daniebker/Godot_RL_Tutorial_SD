@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwmegxfj6sxsf"]
+[gd_scene load_steps=6 format=3 uid="uid://bwmegxfj6sxsf"]
 
 [ext_resource type="Script" path="res://RLTutorials/Game/Game.cs" id="1_5lr48"]
 [ext_resource type="Script" path="res://RLTutorials/Map/Map.cs" id="3_k0qh5"]
 [ext_resource type="Script" path="res://RLTutorials/Game/EventHandler.cs" id="3_l3j23"]
 [ext_resource type="Script" path="res://RLTutorials/Map/DungeonGenerator.cs" id="4_hs3lf"]
+[ext_resource type="Script" path="res://RLTutorials/Map/FieldOfView.cs" id="5_3atdc"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5lr48")
@@ -16,6 +17,9 @@ script = ExtResource("3_k0qh5")
 
 [node name="DungeonGenerator" type="Node" parent="Map"]
 script = ExtResource("4_hs3lf")
+
+[node name="FieldOfView" type="Node" parent="Map"]
+script = ExtResource("5_3atdc")
 
 [node name="Entities" type="Node2D" parent="."]
 

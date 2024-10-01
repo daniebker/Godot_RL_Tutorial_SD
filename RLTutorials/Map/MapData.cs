@@ -44,6 +44,9 @@ namespace SupaRL.Map
             return Tiles[tileIndex];
         }
 
+        public Tile GetTile(int x, int y) =>
+            GetTile(new Vector2I(x, y));
+
         private int GridToIndex(Vector2I gridPosition)
         {
             if (!IsInBounds(gridPosition)) return -1;
