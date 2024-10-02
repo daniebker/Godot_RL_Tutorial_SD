@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using SupaRL.Entities;
 
 namespace SupaRL.Map
 {
@@ -15,11 +16,14 @@ namespace SupaRL.Map
         public int Width { get; set; }
         public int Height { get; set; }
         public Array<Tile> Tiles { get; set; }
+        public Array<Entity> Entities { get; set; }
+
 
         public MapData(int mapWidth, int mapHeight)
         {
             Width = mapWidth;
             Height = mapHeight;
+            Entities = new();
             SetupTiles();
         }
 
