@@ -26,7 +26,18 @@ namespace SupaRL.Map
         [Export]
         public int MaxRoomSize { get; set; } = 10;
 
+        [ExportCategory("Monsters RNG")]
+        [Export]
+        public int MaxMonstersPerRoom { get; set; } = 2;
+
         private RandomNumberGenerator _rng = new RandomNumberGenerator();
+
+        public const string ORC = "orc";
+        public const string TROLL = "troll";
+        public static readonly Dictionary<string, EntityDefinition> entityTypes = new(){
+            { ORC, ResourceLoader.Load<EntityDefinition>("res://assets/definitions/entities/actors/entity_definition_orc.tres") },
+            { TROLL, ResourceLoader.Load<EntityDefinition>("res://assets/definitions/entities/actors/entity_definition_troll.tres") },
+        };
 
         public override void _Ready()
         {
@@ -36,6 +47,7 @@ namespace SupaRL.Map
         public MapData GenerateDungeon(Entity player)
         {
             var dungeon = new MapData(MapWidth, MapHeight);
+            dungeon.Entities.Add(player);
 
             var rooms = new Array<Rect2I>();
 
@@ -66,10 +78,47 @@ namespace SupaRL.Map
                     TunnelBetween(dungeon, rooms.Last().GetCenter(), newRoom.GetCenter());
                 }
 
+                PlaceEntities(dungeon, newRoom);
+
                 rooms.Add(newRoom);
             }
 
             return dungeon;
+        }
+
+        private void PlaceEntities(MapData dungeon, Rect2I room)
+        {
+            int numMonsters = _rng.RandiRange(0, MaxMonstersPerRoom);
+
+            for (int i = 0; i < numMonsters; i++)
+            {
+                var x = _rng.RandiRange(room.Position.X+1, room.End.X-1);
+                var y = _rng.RandiRange(room.Position.Y+1, room.End.Y-1);
+
+                var entityPosition = new Vector2I(x, y);
+                var canPlace = true;
+
+                foreach (var entity in dungeon.Entities)
+                {
+                    if (entity.GridPosition == entityPosition)
+                    {
+                        canPlace = false;
+                        break;
+                    }
+                }
+                if(canPlace)
+                {
+                    Entity newEntity;
+                    if(_rng.Randf() < 0.8)
+                    {
+                        newEntity = new Entity(entityPosition, entityTypes[ORC]);
+                    } else
+                    {
+                        newEntity = new Entity(entityPosition, entityTypes[TROLL]);
+                    }
+                    dungeon.Entities.Add(newEntity);
+                }
+            }
         }
 
         private static void CarveFloor(MapData dungeon, int x, int y)

@@ -18,7 +18,6 @@ namespace SupaRL.Map
         public Array<Tile> Tiles { get; set; }
         public Array<Entity> Entities { get; set; }
 
-
         public MapData(int mapWidth, int mapHeight)
         {
             Width = mapWidth;
