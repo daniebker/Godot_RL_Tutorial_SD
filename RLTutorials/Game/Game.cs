@@ -30,11 +30,26 @@ public partial class Game : Node2D
 	{
 		var action = _eventHandler.GetAction();
 		var previousPlayerPosition = _player.GridPosition;
-		action?.Perform(this, _player);
+		if (action != null) {
+			action.Perform(this, _player);
+			HandleEnemyTurns();
+		}
 
 		if (_player.GridPosition != previousPlayerPosition)
 		{
 			_map.UpdateFieldOfView(_player.GridPosition);
+		}
+	}
+
+	private void HandleEnemyTurns()
+	{
+		foreach (var entity in _map.MapData.Entities)
+		{
+			if (entity == _player) continue;
+			if (entity is Entity actor)
+			{
+				GD.Print($"Enemy turn for {actor.GetName()}");
+			}
 		}
 	}
 

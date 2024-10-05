@@ -63,5 +63,17 @@ namespace SupaRL.Map
                 && coordinate.Y >= 0
                 && coordinate.Y < Height;
         }
+
+        public Entity GetBlockingEntityAtLocation(Vector2I gridPosition)
+        {
+            foreach (var entity in Entities)
+            {
+                if (entity.GridPosition == gridPosition && entity.IsBlocking())
+                {
+                    return entity;
+                }
+            }
+            return null;
+        }
     }
 }

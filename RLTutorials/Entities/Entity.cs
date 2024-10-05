@@ -5,6 +5,14 @@ namespace SupaRL.Entities
 {
     public partial class Entity : Sprite2D
     {
+        private EntityDefinition _entityDefinition;
+        public void SetEntityType(EntityDefinition entityDefinition)
+        {
+            _entityDefinition = entityDefinition;
+            Texture = entityDefinition.Texture;
+            Modulate = entityDefinition.Color;
+        }
+
         private Vector2I _gridPosition;
         public Vector2I GridPosition
         {
@@ -22,11 +30,16 @@ namespace SupaRL.Entities
         {
             Centered = false;
             GridPosition = startPosition;
-            Texture = entityDefinition.Texture;
-            Modulate = entityDefinition.Color;
+            SetEntityType(entityDefinition);
         }
 
         public void Move(Vector2I offset) =>
             GridPosition += offset;
+
+        public bool IsBlocking() =>
+            _entityDefinition.IsBlocking;
+
+        public string GetEntityName() =>
+            _entityDefinition.Name;
     }
 }
