@@ -1,24 +1,25 @@
 using Godot;
 using SupaRL.Entities;
 
+
+namespace SupaRL {
 public partial class MeleeAction : ActionWithDirection 
 {
-    public MeleeAction() { }
-    public MeleeAction(Vector2I offset)
-    {
-        Offset = offset;
-    }
+	public MeleeAction(Entity entity, Vector2I offset) : base(entity, offset)
+	{
+	}
 
-    public override void  Perform(Game game, Entity entity)
-    {
-        Vector2I destination = entity.GridPosition + Offset;
+	public override void  Perform()
+	{
+		Vector2I destination = Entity.GridPosition + Offset;
 
-        var blockingEntity = game.GetMapData().GetBlockingEntityAtLocation(destination);
-        if (blockingEntity == null)
-        {
-            GD.Print("No entity to attack");
-        }
+		var blockingEntity = Entity.MapData.GetBlockingEntityAtLocation(destination);
+		if (blockingEntity == null)
+		{
+			GD.Print("No entity to attack");
+		}
 
-        GD.Print("Attacking entity " + blockingEntity.GetName());
-    }
+		GD.Print("Attacking entity " + blockingEntity.EntityName);
+	}
+}
 }

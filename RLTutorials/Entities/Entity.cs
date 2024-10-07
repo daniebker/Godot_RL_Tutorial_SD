@@ -1,45 +1,84 @@
 using Godot;
 using SupaRL.Utls;
 
+
 namespace SupaRL.Entities
 {
-    public partial class Entity : Sprite2D
-    {
-        private EntityDefinition _entityDefinition;
-        public void SetEntityType(EntityDefinition entityDefinition)
-        {
-            _entityDefinition = entityDefinition;
-            Texture = entityDefinition.Texture;
-            Modulate = entityDefinition.Color;
-        }
+	public partial class Entity : Sprite2D
+	{
+		public enum AIType { NONE, HOSTILE };
+		public Entity(MapData mapData, Vector2I startPosition, EntityDefinition entityDefinition)
+		{
+			MapData = mapData;
+			Centered = false;
+			GridPosition = startPosition;
+			SetEntityType(entityDefinition);
+		}
 
-        private Vector2I _gridPosition;
-        public Vector2I GridPosition
-        {
-            get => _gridPosition;
-            set
-            {
-                _gridPosition = value;
-                Position = Grid.GridToWorld(_gridPosition);
-            }
-        }
+		private EntityDefinition _entityDefinition;
+		public void SetEntityType(EntityDefinition entityDefinition)
+		{
+			EntityType = entityDefinition.EntityType;
+			_entityDefinition = entityDefinition;
+			Texture = entityDefinition.Texture;
+			Modulate = entityDefinition.Color;
+			IsBlocking = entityDefinition.IsBlocking;
+			EntityName = entityDefinition.Name;
 
-        public Entity() { }
+			switch (entityDefinition.AIType)
+			{
+				case AIType.HOSTILE:
+					AIComponent = new HostileEnemyAIComponent();
+					AddChild(AIComponent);
+					break;
+			}
+	
+			if (entityDefinition.FighterDefinition != null)
+			{
+				FighterComponent = new FighterComponent(entityDefinition.FighterDefinition);
+				AddChild(FighterComponent);
+			}
+		}
 
-        public Entity(Vector2I startPosition, EntityDefinition entityDefinition)
-        {
-            Centered = false;
-            GridPosition = startPosition;
-            SetEntityType(entityDefinition);
-        }
+		private Vector2I _gridPosition;
+		public Vector2I GridPosition
+		{
+			get => _gridPosition;
+			set
+			{
+				_gridPosition = value;
+				Position = Grid.GridToWorld(_gridPosition);
+			}
+		}
 
-        public void Move(Vector2I offset) =>
-            GridPosition += offset;
+		public MapData MapData { get;  set; }
 
-        public bool IsBlocking() =>
-            _entityDefinition.IsBlocking;
+		public void Move(Vector2I offset) {
+			MapData.UnregisterBlockingEntity(this);
+			GridPosition += offset;
+			MapData.RegisterBlockingEntity(this);
+		}
 
-        public string GetEntityName() =>
-            _entityDefinition.Name;
-    }
+		public bool IsBlocking {
+			get; private set;
+		}
+
+		public string EntityName {get; private set;}
+
+		private EntityType entityType;
+		public EntityType EntityType
+		{
+			get => entityType;
+			set
+			{
+				entityType = value;
+				ZIndex = (int)entityType;
+			}
+		}
+
+		public FighterComponent FighterComponent { get; set; }
+		public BaseAIComponent AIComponent { get; set; }
+
+		public bool IsAlive => AIComponent != null;
+	}
 }

@@ -1,7 +1,7 @@
 using Godot;
 using SupaRL.Utls;
 
-namespace SupaRL.Map
+namespace SupaRL
 {
 	public partial class Tile : Sprite2D
 	{

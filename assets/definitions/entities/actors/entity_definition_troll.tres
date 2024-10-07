@@ -1,7 +1,21 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=4 format=3 uid="uid://bjnerbnxfosaq"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=7 format=3 uid="uid://bjnerbnxfosaq"]
 
 [ext_resource type="Texture2D" uid="uid://bd3yxjuamg78o" path="res://assets/images/kenney_micro_pack/colored_tilemap_packed.png" id="1_x3vgd"]
 [ext_resource type="Script" path="res://RLTutorials/Entities/EntityDefinition.cs" id="2_66i6p"]
+[ext_resource type="Script" path="res://RLTutorials/Entities/Actors/Components/ComponentDefinitions/FighterComponentDefinition.cs" id="2_d1p3f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20v6r"]
+atlas = ExtResource("1_x3vgd")
+region = Rect2(80, 0, 8, 8)
+
+[sub_resource type="Resource" id="Resource_5cj8h"]
+script = ExtResource("2_d1p3f")
+MaxHp = 16
+Hp = 16
+Defense = 4
+Power = 1
+DeathTexture = SubResource("AtlasTexture_20v6r")
+DeathColor = Color(0.545098, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_toqf3"]
 atlas = ExtResource("1_x3vgd")
@@ -14,3 +28,6 @@ Name = "Unnamed Entity"
 Texture = SubResource("AtlasTexture_toqf3")
 Color = Color(1, 1, 1, 1)
 IsBlocking = true
+EntityType = 0
+FighterDefinition = SubResource("Resource_5cj8h")
+AIType = 1

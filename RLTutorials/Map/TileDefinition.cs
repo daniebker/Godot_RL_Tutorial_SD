@@ -1,28 +1,28 @@
 using Godot;
 
-namespace SupaRL.Map
+namespace SupaRL
 {
-    [GlobalClass]
-    public partial class TileDefinition : Resource
-    {
-        [ExportCategory("Visuals")]
+	[GlobalClass]
+	public partial class TileDefinition : Resource
+	{
+		[ExportCategory("Visuals")]
 
-        [Export]
-        public AtlasTexture Texture { set; get; }
+		[Export]
+		public AtlasTexture Texture { set; get; }
 
-        [Export(PropertyHint.ColorNoAlpha)]
-        public Color ColorLit {get; set;} = Colors.White;
+		[Export(PropertyHint.ColorNoAlpha)]
+		public Color ColorLit {get; set;} = Colors.White;
 
-        [Export(PropertyHint.ColorNoAlpha)]
-        public Color ColorDark { get; set; } = Colors.White;
+		[Export(PropertyHint.ColorNoAlpha)]
+		public Color ColorDark { get; set; } = Colors.White;
 
 
-        [ExportCategory("Mechanics")]
+		[ExportCategory("Mechanics")]
 
-        [Export]
-        public bool IsWalkable { get; set; } = true;
+		[Export]
+		public bool IsWalkable { get; set; } = true;
 
-        [Export]
-        public bool IsTransparent { get; set; } = true;
-    }
+		[Export]
+		public bool IsTransparent { get; set; } = true;
+	}
 }

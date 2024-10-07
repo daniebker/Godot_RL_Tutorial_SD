@@ -1,16 +1,16 @@
 [gd_scene load_steps=6 format=3 uid="uid://bwmegxfj6sxsf"]
 
 [ext_resource type="Script" path="res://RLTutorials/Game/Game.cs" id="1_5lr48"]
+[ext_resource type="Script" path="res://RLTutorials/Game/InputHandler.cs" id="2_rt3kn"]
 [ext_resource type="Script" path="res://RLTutorials/Map/Map.cs" id="3_k0qh5"]
-[ext_resource type="Script" path="res://RLTutorials/Game/EventHandler.cs" id="3_l3j23"]
 [ext_resource type="Script" path="res://RLTutorials/Map/DungeonGenerator.cs" id="4_hs3lf"]
 [ext_resource type="Script" path="res://RLTutorials/Map/FieldOfView.cs" id="5_3atdc"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5lr48")
 
-[node name="EventHandler" type="Node" parent="."]
-script = ExtResource("3_l3j23")
+[node name="InputHandler" type="Node" parent="."]
+script = ExtResource("2_rt3kn")
 
 [node name="Map" type="Node2D" parent="."]
 script = ExtResource("3_k0qh5")

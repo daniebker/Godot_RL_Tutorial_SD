@@ -2,7 +2,8 @@ using Godot;
 using Godot.Collections;
 using System;
 
-namespace SupaRL.Map {
+namespace SupaRL
+{
 public partial class FieldOfView : Node
 {
 	int [,] _multipliers = new int[,]{

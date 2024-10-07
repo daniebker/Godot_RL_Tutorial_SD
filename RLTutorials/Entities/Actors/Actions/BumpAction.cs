@@ -1,33 +1,31 @@
 using Godot;
 using SupaRL.Entities;
 
+namespace SupaRL {
 public partial class BumpAction : ActionWithDirection
 {
-    public BumpAction() { }
+	public BumpAction(Entity entity, int x, int y) : base(entity, new Vector2I(x,y))
+	{
 
-    public BumpAction(int x, int y)
-    {
-        Offset = new Vector2I(x, y);
-    }
+	}
 
-    public BumpAction(Vector2I offset)
-    {
-        Offset = offset;
-    }
+	public BumpAction(Entity entity, Vector2I offset) : base(entity, offset)
+	{
+	}
 
-    public override void Perform(Game game, Entity entity)
-    {
-        Vector2I destination = entity.GridPosition + Offset;
+	public override void Perform()
+	{
+		Vector2I destination = Entity.GridPosition + Offset;
 
-        var blockingEntity = game.GetMapData().GetBlockingEntityAtLocation(destination);
-        GD.Print($"Blocking entity: {blockingEntity}");
-        if (blockingEntity == null)
-        {
-            new MovementAction(Offset).Perform(game, entity);
-        }
-        else
-        {
-            new MeleeAction(Offset).Perform(game, entity);
-        }
-    }
+		var blockingEntity = Entity.MapData.GetBlockingEntityAtLocation(destination);
+		if (blockingEntity == null)
+		{
+			new MovementAction(Entity, Offset).Perform();
+		}
+		else
+		{
+			new MeleeAction(Entity, Offset).Perform();
+		}
+	}
+}
 }

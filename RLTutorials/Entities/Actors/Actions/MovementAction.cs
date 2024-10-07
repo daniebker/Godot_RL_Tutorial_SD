@@ -1,31 +1,32 @@
 using Godot;
 using SupaRL.Entities;
 
+
+namespace SupaRL {
 public partial class MovementAction : ActionWithDirection
 {
-    public MovementAction() {}
-    public MovementAction(Vector2I offset)
-    {
-        Offset = offset;
-    }
+	public MovementAction(Entity entity,Vector2I offset) : base(entity, offset) 
+	{
+	}
 
-    public override void Perform(Game game, Entity entity)
-    {
-        Vector2I destination = entity.GridPosition + Offset;
+	public override void Perform()
+	{
+		Vector2I destination = Entity.GridPosition + Offset;
 
-        var mapData = game.GetMapData();
-        var destinationTile = mapData.GetTile(destination);
+		var mapData = Entity.MapData;
+		var destinationTile = mapData.GetTile(destination);
 
-        if (destinationTile == null || !destinationTile.IsWalkable())
-        {
-            return;
-        }
+		if (destinationTile == null || !destinationTile.IsWalkable())
+		{
+			return;
+		}
 
-        if(game.GetMapData().GetBlockingEntityAtLocation(destination) != null)
-        {
-            return;
-        }
+		if(mapData.GetBlockingEntityAtLocation(destination) != null)
+		{
+			return;
+		}
 
-        entity.Move(Offset);
-    }
+		Entity.Move(Offset);
+	}
+}
 }

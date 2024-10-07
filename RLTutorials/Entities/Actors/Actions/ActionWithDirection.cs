@@ -1,19 +1,19 @@
 using Godot;
 using SupaRL.Entities;
 
+namespace SupaRL {
 public partial class ActionWithDirection : Action
 {
-    public Vector2I Offset { get; set; }
+	public Vector2I Offset { get; set; }
 
-    public ActionWithDirection() { }
+	public ActionWithDirection(Entity entity, Vector2I offset) : base(entity)
+	{
+		Offset = offset;
+	}
 
-    public ActionWithDirection(Vector2I offset)
-    {
-        Offset = offset;
-    }
-
-    public override void Perform(Game game, Entity entity)
-    {
-        throw new System.NotImplementedException("Calling base action Perform method. This should be overridden by a subclass.");
-    }
+	public override void Perform()
+	{
+		throw new System.NotImplementedException("Calling base action Perform method. This should be overridden by a subclass.");
+	}
+}
 }
